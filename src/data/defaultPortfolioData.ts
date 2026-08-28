@@ -9,8 +9,8 @@ export const defaultPortfolioData: PortfolioData = {
     bio: "I am a dedicated BSCS student at IIUI with a year of practical software development experience. My absolute favorite part of development is pushing my own technical boundaries; I love learning new programming languages, want to master new technologies, and actively try experimenting with them to build better things. I am looking to bring this drive and analytical mindset to a dynamic team where I can grow as an engineer and build robust software that solves everyday, real-world problems.",
     avatarUrl: "https://res.cloudinary.com/ncjzdgxy/image/upload/v1787933433/Profile_kmvhe6.jpg",
     location: "Islamabad, Pakistan.",
-    statusText: "Available for interesting projects & collabs",
-    statusAvailable: true,
+    statusText: "",
+    statusAvailable: false,
     resumeUrl: "#",
     socials: [
       {

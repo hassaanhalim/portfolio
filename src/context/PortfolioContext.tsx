@@ -39,7 +39,7 @@ interface PortfolioContextType {
   importDataJson: (jsonStr: string) => boolean;
 }
 
-const STORAGE_KEY = 'magicui_portfolio_data_v2';
+const STORAGE_KEY = 'magicui_portfolio_data_v3';
 const THEME_KEY = 'magicui_portfolio_theme';
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
