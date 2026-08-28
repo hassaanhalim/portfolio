@@ -2,141 +2,90 @@ import { PortfolioData } from '../types/portfolio';
 
 export const defaultPortfolioData: PortfolioData = {
   profile: {
-    name: "Dillion Verma",
-    initials: "DV",
-    title: "Hi, I'm Dillion",
-    tagline: "Software Engineer turned Entrepreneur. I love building things and helping people. Very active on Twitter.",
-    bio: "At the end of 2022, I quit my job as a software engineer to go fulltime into building and scaling my own SaaS businesses. In the past, I pursued a double degree in computer science and business, interned at big tech companies in Silicon Valley, and competed in over 21 hackathons for fun. I also had the pleasure of being a part of the first ever in-person cohort of buildspace called buildspace sf1.",
-    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
-    location: "San Francisco, CA",
+    name: "Hassaan Halim",
+    initials: "HH",
+    title: "Hi, I'm Hassaan",
+    tagline: "Currently a student, learning software development.",
+    bio: "I am a dedicated BSCS student at IIUI with a year of practical software development experience. My absolute favorite part of development is pushing my own technical boundaries; I love learning new programming languages, want to master new technologies, and actively try experimenting with them to build better things. I am looking to bring this drive and analytical mindset to a dynamic team where I can grow as an engineer and build robust software that solves everyday, real-world problems.",
+    avatarUrl: "https://res.cloudinary.com/ncjzdgxy/image/upload/v1787933433/Profile_kmvhe6.jpg",
+    location: "Islamabad, Pakistan.",
     statusText: "Available for interesting projects & collabs",
     statusAvailable: true,
     resumeUrl: "#",
     socials: [
-      { platform: 'github', label: 'GitHub', url: 'https://github.com' },
-      { platform: 'twitter', label: 'X (Twitter)', url: 'https://twitter.com' },
-      { platform: 'linkedin', label: 'LinkedIn', url: 'https://linkedin.com' },
-      { platform: 'email', label: 'Email', url: 'mailto:hello@example.com' },
-      { platform: 'youtube', label: 'YouTube', url: 'https://youtube.com' }
+      {
+        platform: "github",
+        label: "GitHub",
+        url: "https://github.com/hassaanhalim"
+      },
+      {
+        platform: "linkedin",
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/hassaanhalim2006"
+      },
+      {
+        platform: "email",
+        label: "Email",
+        url: "hassaanhalim2006@gmail.com"
+      }
     ]
   },
   experiences: [
     {
-      id: "exp-1",
-      company: "Atomic Finance",
-      role: "Bitcoin Protocol Engineer",
-      startDate: "May 2021",
-      endDate: "Oct 2022",
-      location: "San Francisco, CA",
-      description: "Leveraged the Bitcoin network to build decentralized financial infrastructure and non-custodial yield generation protocols.",
+      id: "exp-1787933971334",
+      company: "Paramount Intelligence",
+      role: "Intern",
+      startDate: "June 2026",
+      endDate: "September 2026",
+      location: "Islamabad, Pakistan",
+      description: "Completed a 3-month Web Development internship focused on building dynamic, responsive web applications using React, Next.js, JavaScript, and Tailwind CSS. Contributed to end-to-end frontend feature implementation, including interactive UI components, state management, and API integration. Worked with modern web tools and Git workflows to deliver clean, maintainable code and scalable interface components.",
       bullets: [
-        "Architected and deployed DLC (Discreet Log Contracts) based oracle infrastructure.",
-        "Built TypeScript SDKs and cross-platform mobile wallet integration components.",
-        "Collaborated with core Bitcoin contributors on cryptographic primitives."
+        "Built responsive frontend interfaces using React, Next.js, and Tailwind CSS",
+        "Integrated REST APIs and implemented reactive UI state management",
+        "Collaborated with Git workflows and modern web tooling"
       ],
-      logoUrl: "https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://atomic.finance",
-      badges: ["Bitcoin", "TypeScript", "Rust", "DLC"]
-    },
-    {
-      id: "exp-2",
-      company: "Shopify",
-      role: "Software Engineer",
-      startDate: "January 2021",
-      endDate: "April 2021",
-      location: "Toronto, ON",
-      description: "Implemented core checkout integrations and high-throughput merchant inventory synchronizers.",
-      bullets: [
-        "Reduced checkout latency by 18% for high-volume flash sales.",
-        "Engineered resilient GraphQL queries for merchant storefronts."
-      ],
-      logoUrl: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://shopify.com",
-      badges: ["Ruby on Rails", "React", "GraphQL", "Redis"]
-    },
-    {
-      id: "exp-3",
-      company: "Nvidia",
-      role: "Software Engineer",
-      startDate: "January 2020",
-      endDate: "April 2020",
-      location: "Santa Clara, CA",
-      description: "Contributed to GPU telemetry systems and distributed benchmark automation pipelines for deep learning hardware validation.",
-      bullets: [
-        "Automated stress testing pipelines for CUDA driver performance profiling.",
-        "Created dashboards visualizing real-time hardware telemetry."
-      ],
-      logoUrl: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://nvidia.com",
-      badges: ["Python", "C++", "CUDA", "Docker"]
-    },
-    {
-      id: "exp-4",
-      company: "Splunk",
-      role: "Software Engineer",
-      startDate: "January 2019",
-      endDate: "April 2019",
-      location: "San Jose, CA",
-      description: "Developed real-time enterprise observability plugins and log streaming search acceleration features.",
-      bullets: [
-        "Engineered fast indexing connectors for Kubernetes cluster logs."
-      ],
-      logoUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://splunk.com",
-      badges: ["Go", "Distributed Systems", "REST"]
-    },
-    {
-      id: "exp-5",
-      company: "Lime",
-      role: "Software Engineer",
-      startDate: "January 2018",
-      endDate: "April 2018",
-      location: "San Francisco, CA",
-      description: "Built microservices for vehicle fleet rebalancing telemetry and rider geofencing alerts.",
-      bullets: [
-        "Optimized geospatial query response times across 50,000+ active micro-mobility scooters."
-      ],
-      logoUrl: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://li.me",
-      badges: ["Node.js", "PostgreSQL", "GIS", "Redis"]
+      logoUrl: "https://www.paramountintelligence.co/_next/image?url=%2Fimages%2Flogo.png&w=48&q=75",
+      websiteUrl: "https://www.paramountintelligence.co",
+      badges: [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "React.js",
+        "Next.js",
+        "Tailwind CSS",
+        "Git",
+        "GitHub",
+        "REST APIs"
+      ]
     }
   ],
   education: [
     {
-      id: "edu-1",
-      institution: "Buildspace",
-      degree: "s3, s4, sf1, s5 Resident",
-      startDate: "2023",
+      id: "edu-1787934315073",
+      institution: "International Islamic University, Islamabad",
+      degree: "BSCS",
+      startDate: "2025",
+      endDate: "Ongoing",
+      logoUrl: "https://scontent.fisb12-1.fna.fbcdn.net/v/t39.30808-1/310276684_145150708241686_5498917284299831962_n.jpg?stp=dst-jpg_tt6&cstp=mx537x537&ctp=s200x200&_nc_cat=100&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeE5ACbjoFpMQx9Xc7ZfUgrgFZ6EqocDQXcVnoSqhwNBd2VJDEYyJwhGXRbip4XuL7PTolQwZ_W0_XoXKZxvkIur&_nc_ohc=0UIff_6nlrQQ7kNvwGB9BbY&_nc_oc=Adq4B6k4pomwWYQq8JfZ1jNep89hdSaeFSdreKuhnAwpOGwFW7N_U5EUPSS9jW4yWzX8Uy0ygtoxiS5oEKMwtbsv&_nc_zt=24&_nc_ht=scontent.fisb12-1.fna&_nc_gid=1JWOVh8lIZk6AOY53_kcrA&_nc_ss=7b2a8&oh=00_AQFHZqhuxhM3KortEBapQ7pWTJc5HUiIxcCvCmDa9D-Y8w&oe=6A979064",
+      websiteUrl: "https://www.iiu.edu.pk/",
+      description: "BS Computer Science student at IIUI focused on web development and software engineering."
+    },
+    {
+      id: "edu-1787934178602",
+      institution: "Qurtaba School and College, B17 Campus",
+      degree: "Intermediate",
+      startDate: "2022",
       endDate: "2024",
-      logoUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://buildspace.so",
-      description: "Built and launched consumer AI products during the prestigious SF residency cohort."
-    },
-    {
-      id: "edu-2",
-      institution: "University of Waterloo",
-      degree: "Bachelor's Degree of Computer Science (BCS)",
-      startDate: "2016",
-      endDate: "2021",
-      logoUrl: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://uwaterloo.ca",
-      description: "Focus on Distributed Systems, Algorithms, Computer Graphics, and Security."
-    },
-    {
-      id: "edu-3",
-      institution: "Wilfrid Laurier University",
-      degree: "Bachelor's Degree of Business Administration (BBA)",
-      startDate: "2016",
-      endDate: "2021",
-      logoUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100&auto=format&fit=crop&q=80",
-      websiteUrl: "https://wlu.ca",
-      description: "Double degree program specializing in Finance and Entrepreneurship."
+      logoUrl: "https://scontent.fisb12-1.fna.fbcdn.net/v/t39.30808-1/364096192_273927948614834_8907502498128689908_n.jpg?stp=dst-jpg_tt6&cstp=mx1149x1150&ctp=s200x200&_nc_cat=110&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeHeU-C0pCJIZ5Oxa8K6yxwjcsqprnKK16ZyyqmucorXpkaZdjIe8K5BdVhC_VFxyMarp7M-BTdJX3378_8c34-4&_nc_ohc=2tK9aQAlqKMQ7kNvwEtyRJd&_nc_oc=Adre5MQT97U5qCvRgcrqNBLLyF1U0ZBoFmJa9ERpXkQ_vJwS9wBHuJP1NLKo0oQb29_m77KrueZQSl21YahkFTMa&_nc_zt=24&_nc_ht=scontent.fisb12-1.fna&_nc_gid=EXQjmg6xA0YnmBjP1YWxLQ&_nc_ss=7b2a8&oh=00_AQEUf1cdCaJdpl0INyA9D4nCaMSvzPavO3ylU5e2wU7jgQ&oe=6A979467",
+      websiteUrl: "https://qes.qurtuba.edu.pk/",
+      description: "FSc. PreMedical"
     }
   ],
   skills: [
     { name: "React", category: "Frontend" },
     { name: "Next.js", category: "Frontend" },
     { name: "TypeScript", category: "Languages" },
+    { name: "JavaScript", category: "Languages" },
     { name: "Node.js", category: "Backend" },
     { name: "Python", category: "Languages" },
     { name: "Go", category: "Languages" },
@@ -151,97 +100,38 @@ export const defaultPortfolioData: PortfolioData = {
   ],
   projects: [
     {
-      id: "proj-1",
-      title: "ChatCollect",
-      description: "With over 100,000+ active users, ChatCollect is the AI agent platform enabling live store leads conversion directly on modern web applications.",
-      dates: "Jan 2024 - Present",
-      tags: ["Next.js", "TypeScript", "OpenAI", "TailwindCSS", "Stripe", "Prisma"],
-      imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
-      liveUrl: "https://chatcollect.com",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: "proj-2",
-      title: "Magic UI Component Library",
-      description: "50+ open-source animated UI components built with React, TypeScript, and modern CSS for high-converting landing pages and portfolios.",
-      dates: "June 2023 - Present",
-      tags: ["React", "CSS Modules", "Vite", "Animation", "Open Source"],
-      imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80",
-      liveUrl: "https://magicui.design",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: "proj-3",
-      title: "llm.report",
-      description: "Open-source logging and analytics platform for OpenAI LLM requests with token cost monitoring, latency charts, and cache optimizations.",
-      dates: "April 2023 - Sept 2023",
-      tags: ["Next.js", "Node.js", "ClickHouse", "Tremor", "TailwindCSS"],
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
-      liveUrl: "https://llm.report",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: "proj-4",
-      title: "Automatic Video Subtitle AI",
-      description: "Transcribes speech with Whisper AI models, generates animated karaoke-style captions, and renders 60fps MP4 clips in seconds.",
-      dates: "Nov 2023 - Dec 2023",
-      tags: ["React", "FFmpeg", "Whisper AI", "WebAssembly", "FastAPI"],
-      imageUrl: "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&auto=format&fit=crop&q=80",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: false
+      id: "proj-1787934780592",
+      title: "E commerce website",
+      description: "Full-stack footwear e-commerce platform with product discovery, filtering, cart, checkout, orders, reviews, and admin management. Includes an AI shopping assistant that understands customer needs and recommends real products from the catalog. Built with React, NestJS, PostgreSQL, Prisma, Groq, Vercel, and Railway.",
+      dates: "2026 - Present",
+      tags: [
+        "React",
+        "Vite",
+        "TypeScript",
+        "Tailwind CSS",
+        "React Router",
+        "NestJS",
+        "Node.js",
+        "Prisma ORM",
+        "PostgreSQL",
+        "Supabase",
+        "JWT",
+        "Passport.js",
+        "Groq API",
+        "Llama 3.3 70B",
+        "Vercel",
+        "Railway",
+        "Playwright",
+        "Swagger"
+      ],
+      imageUrl: "https://res.cloudinary.com/ncjzdgxy/image/upload/v1787934662/Capture_u8fglp.png",
+      videoUrl: "",
+      liveUrl: "https://www.shoestore.live/",
+      githubUrl: "https://github.com/hassaanhalim/e-commerce-website.git",
+      featured: true,
+      previewType: "iframe"
     }
   ],
-  hackathons: [
-    {
-      id: "hack-1",
-      title: "Hack Western 9",
-      dates: "November 2022",
-      location: "London, Ontario",
-      description: "Developed a cross-chain biometric authentication protocol for hardware keys with seamless zero-knowledge proof generation.",
-      award: "1st Place Winner - Best Security Protocol",
-      links: [{ title: "Devpost", url: "https://devpost.com" }]
-    },
-    {
-      id: "hack-2",
-      title: "Hack The North",
-      dates: "September 2021",
-      location: "Waterloo, ON",
-      description: "Built an AI-powered voice assistant for visual accessibility that narrates live UI interactions and screen changes via browser extensions.",
-      award: "Top 10 Finalist & Best Accessibility Hack",
-      links: [{ title: "GitHub", url: "https://github.com" }, { title: "YouTube", url: "https://youtube.com" }]
-    },
-    {
-      id: "hack-3",
-      title: "ETHWaterloo",
-      dates: "November 2019",
-      location: "Waterloo, ON",
-      description: "Created micro-lending smart contracts for community energy grid solar panel installations with automated yield settlement.",
-      award: "Finalist & ConsenSys Sponsor Prize",
-      links: [{ title: "Devpost", url: "https://devpost.com" }]
-    },
-    {
-      id: "hack-4",
-      title: "Global AI Hackathon SF",
-      dates: "June 2019",
-      location: "San Francisco, CA",
-      description: "Trained generative vision neural networks to automatically generate responsive UI wireframes from handwritten napkin sketches.",
-      award: "1st Place - Best Developer Tool",
-      links: [{ title: "Devpost", url: "https://devpost.com" }]
-    }
-  ],
-  messages: [
-    {
-      id: "msg-1",
-      name: "Sarah Jenkins",
-      email: "sarah.j@techcorp.io",
-      subject: "Collaboration on Next.js AI platform",
-      message: "Hey Dillion! Loved your Magic UI components and ChatCollect demo. Would love to discuss a potential advisory role or collaboration for our seed-stage startup.",
-      date: "2026-08-25 14:32",
-      read: true
-    }
-  ]
+  hackathons: [],
+  messages: []
 };
