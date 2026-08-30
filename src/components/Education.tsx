@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { ExternalLink, GraduationCap } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 
 export const Education: React.FC = () => {
   const { data } = usePortfolio();
@@ -14,62 +14,71 @@ export const Education: React.FC = () => {
         <h2 className="section-title">Education</h2>
       </div>
 
-      <div className="education-list">
-        {education.map(edu => (
-          <div key={edu.id} className="education-card">
-            {/* Top Row: Logo + University/College Name */}
-            <div className="education-header">
-              <div className="education-logo-wrap">
+      <div className="education-list-minimal">
+        {education.map(edu => {
+          const content = (
+            <div className="education-row-content">
+              {/* Circular Avatar Logo */}
+              <div className="education-circle-avatar">
                 {edu.logoUrl ? (
                   <img
                     src={edu.logoUrl}
                     alt={edu.institution}
-                    className="company-logo"
+                    className="education-avatar-img"
                     onError={e => {
                       (e.target as HTMLElement).style.display = 'none';
                     }}
                   />
                 ) : (
-                  <div className="company-logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <GraduationCap size={18} />
+                  <div className="education-avatar-fallback">
+                    <GraduationCap size={16} />
                   </div>
                 )}
               </div>
 
-              <div className="institution-name">
-                <span>{edu.institution}</span>
-                {edu.websiteUrl && (
-                  <a
-                    href={edu.websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: 'var(--text-muted)', display: 'inline-flex' }}
-                    title={`Visit ${edu.institution}`}
-                  >
-                    <ExternalLink size={12} />
-                  </a>
+              {/* Institution & Degree */}
+              <div className="education-text-block">
+                <div className="education-inst-title">
+                  {edu.institution}
+                </div>
+                <div className="education-degree-subtitle">
+                  {edu.degree}
+                </div>
+                {edu.description && (
+                  <div className="education-desc-text">
+                    {edu.description}
+                  </div>
                 )}
               </div>
-            </div>
 
-            {/* Second Row: Degree Name + Duration Badge */}
-            <div className="education-sub-row">
-              <div className="role-title" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                {edu.degree}
-              </div>
-              <div className="education-date-badge">
-                {edu.startDate} – {edu.endDate}
+              {/* Right-aligned Date */}
+              <div className="education-date-text">
+                {edu.startDate} - {edu.endDate}
               </div>
             </div>
+          );
 
-            {/* Third Row: Description (if available) */}
-            {edu.description && (
-              <div className="education-desc">
-                {edu.description}
-              </div>
-            )}
-          </div>
-        ))}
+          if (edu.websiteUrl && edu.websiteUrl.trim() !== '' && edu.websiteUrl !== '#') {
+            return (
+              <a
+                key={edu.id}
+                href={edu.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="education-item-link"
+                title={`Visit ${edu.institution}`}
+              >
+                {content}
+              </a>
+            );
+          }
+
+          return (
+            <div key={edu.id} className="education-item-link static">
+              {content}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
