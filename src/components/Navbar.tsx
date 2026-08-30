@@ -75,8 +75,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
           })}
         </nav>
 
-        {/* Divider & Theme Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+        {/* Divider & Theme Toggle (Hidden on mobile phones) */}
+        <div className="nav-theme-container" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
           <div className="nav-divider" />
           <button
             onClick={toggleTheme}

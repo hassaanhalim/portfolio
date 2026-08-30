@@ -340,20 +340,9 @@ button {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   }
 
-  .nav-icon-btn {
-    width: 2.65rem;
-    height: 2.65rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-  }
-
-  .nav-icon-btn .nav-icon,
-  .nav-icon-btn svg {
-    width: 1.25rem !important;
-    height: 1.25rem !important;
-    stroke-width: 2.1;
+  .nav-theme-container,
+  .nav-divider {
+    display: none !important;
   }
 }
 
