@@ -70,11 +70,15 @@ export const WorkExperience: React.FC = () => {
                       )}
                     </div>
                     <div className="role-title">{exp.role}</div>
+                    {/* Mobile date shown underneath role */}
+                    <div className="experience-date-mobile">
+                      {exp.startDate} - {exp.endDate}
+                    </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <div className="experience-date">
+                <div className="experience-right">
+                  <div className="experience-date-desktop">
                     {exp.startDate} - {exp.endDate}
                   </div>
                   <ChevronDown size={16} className={`experience-chevron ${isExpanded ? 'open' : ''}`} />

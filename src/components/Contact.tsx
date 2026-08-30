@@ -108,11 +108,12 @@ export const Contact: React.FC = () => {
               />
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: '0.75rem' }}>
               <button
                 type="submit"
                 disabled={submitting}
                 className="form-submit-btn"
+                style={{ width: '100%', maxWidth: '280px' }}
               >
                 <Send size={15} />
                 <span>{submitting ? 'Sending...' : 'Send Message'}</span>

@@ -6,6 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hassaan - Portfolio</title>
     <meta name="description" content="Personal portfolio and showcase with dynamic content management, interactive timeline, and Magic UI aesthetic." />
+    
+    <!-- Instant System Theme Initialization -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('magicui_portfolio_theme_v2');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = saved ? saved === 'dark' : (prefersDark !== false);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Google Fonts: Inter & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -653,12 +653,27 @@ button {
   text-overflow: ellipsis;
 }
 
-.experience-date {
+.experience-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.experience-date-desktop {
   font-size: 0.75rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.experience-date-mobile {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 0.2rem;
 }
 
 .experience-chevron {
@@ -680,6 +695,19 @@ button {
 }
 
 @media (max-width: 640px) {
+  .experience-header {
+    padding: 0.85rem 1rem;
+    align-items: flex-start;
+  }
+  .experience-date-desktop {
+    display: none;
+  }
+  .experience-date-mobile {
+    display: block;
+  }
+  .role-title {
+    white-space: normal;
+  }
   .experience-body {
     padding-left: 1.25rem;
   }

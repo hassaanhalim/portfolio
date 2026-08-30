@@ -40,7 +40,7 @@ interface PortfolioContextType {
 }
 
 const STORAGE_KEY = 'magicui_portfolio_data_v3';
-const THEME_KEY = 'magicui_portfolio_theme';
+const THEME_KEY = 'magicui_portfolio_theme_v2';
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
@@ -59,11 +59,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   });
 
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    } catch (e) {}
     return 'dark';
   });
 
@@ -74,7 +76,6 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     
     const handleSystemThemeChange = (e: MediaQueryListEvent) => {
       const savedTheme = localStorage.getItem(THEME_KEY);
-      // Auto-update if no manual lock
       if (!savedTheme) {
         setTheme(e.matches ? 'dark' : 'light');
       }
@@ -86,7 +87,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   }, []);
 
-  // Sync theme class to document element
+  // Sync theme class to document element and body
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -109,7 +110,11 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [data]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme(prev => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_KEY, next);
+      return next;
+    });
   };
 
   const updateProfile = (profileUpdate: Partial<Profile>) => {
