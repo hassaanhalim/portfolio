@@ -15,13 +15,13 @@ export const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setSubmitting(true);
-    setTimeout(() => {
-      sendMessage({
+    try {
+      await sendMessage({
         name: formData.name,
         email: formData.email,
         subject: formData.subject || 'Portfolio Inquiry',
@@ -31,7 +31,9 @@ export const Contact: React.FC = () => {
       setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setSubmitted(false), 6000);
-    }, 400);
+    } catch (err) {
+      setSubmitting(false);
+    }
   };
 
   return (

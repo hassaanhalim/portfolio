@@ -1,10 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { PortfolioData, WorkExperience, Project, Education, SkillItem, Hackathon, ContactMessage, Profile } from '../types/portfolio';
 import { defaultPortfolioData } from '../data/defaultPortfolioData';
+import { supabase } from '../lib/supabase';
 
 interface PortfolioContextType {
   data: PortfolioData;
   theme: 'dark' | 'light';
+  isCloudConnected: boolean;
   toggleTheme: () => void;
   updateProfile: (profile: Partial<Profile>) => void;
   // Work Experience
@@ -30,7 +32,7 @@ interface PortfolioContextType {
   updateHackathon: (id: string, hack: Partial<Hackathon>) => void;
   deleteHackathon: (id: string) => void;
   // Messages
-  sendMessage: (msg: Omit<ContactMessage, 'id' | 'date' | 'read'>) => boolean;
+  sendMessage: (msg: Omit<ContactMessage, 'id' | 'date' | 'read'>) => Promise<boolean>;
   markMessageRead: (id: string) => void;
   deleteMessage: (id: string) => void;
   // Reset & Import/Export
@@ -45,6 +47,9 @@ const THEME_KEY = 'magicui_portfolio_theme_v2';
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
 export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isCloudConnected, setIsCloudConnected] = useState<boolean>(false);
+  const isInitialMount = useRef<boolean>(true);
+
   const [data, setData] = useState<PortfolioData>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -69,7 +74,93 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     return 'dark';
   });
 
-  // Automatically listen and adapt to device/OS theme preference changes
+  // 1. Fetch initial Cloud Data & Messages from Supabase
+  useEffect(() => {
+    const fetchCloudData = async () => {
+      try {
+        // Fetch Portfolio Content
+        const { data: cloudRow, error: cloudError } = await supabase
+          .from('portfolio_data')
+          .select('content')
+          .eq('id', 'main')
+          .maybeSingle();
+
+        if (!cloudError && cloudRow && cloudRow.content) {
+          setData(prev => ({
+            ...prev,
+            ...cloudRow.content
+          }));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudRow.content));
+          setIsCloudConnected(true);
+        } else if (!cloudRow) {
+          // Auto-seed Supabase with current defaults if table is empty
+          const { messages, ...seedContent } = data;
+          await supabase.from('portfolio_data').upsert({
+            id: 'main',
+            content: seedContent,
+            updated_at: new Date().toISOString()
+          });
+          setIsCloudConnected(true);
+        }
+
+        // Fetch Live Messages
+        const { data: cloudMessages, error: msgError } = await supabase
+          .from('portfolio_messages')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (!msgError && cloudMessages) {
+          const formattedMessages: ContactMessage[] = cloudMessages.map(m => ({
+            id: m.id,
+            name: m.name,
+            email: m.email,
+            subject: m.subject || 'Portfolio Contact',
+            message: m.message,
+            read: m.read || false,
+            date: new Date(m.created_at).toLocaleString()
+          }));
+
+          setData(prev => ({
+            ...prev,
+            messages: formattedMessages
+          }));
+        }
+      } catch (err) {
+        console.warn('Supabase initialization warning:', err);
+      }
+    };
+
+    fetchCloudData();
+
+    // Subscribe to real-time incoming contact messages
+    const messageChannel = supabase
+      .channel('realtime_messages')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'portfolio_messages' }, payload => {
+        const newMsg = payload.new;
+        if (newMsg) {
+          const formatted: ContactMessage = {
+            id: newMsg.id,
+            name: newMsg.name,
+            email: newMsg.email,
+            subject: newMsg.subject || 'Portfolio Contact',
+            message: newMsg.message,
+            read: newMsg.read || false,
+            date: new Date(newMsg.created_at || Date.now()).toLocaleString()
+          };
+          setData(prev => ({
+            ...prev,
+            messages: [formatted, ...(prev.messages || []).filter(m => m.id !== formatted.id)]
+          }));
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(messageChannel);
+    };
+  }, []);
+
+  // 2. Automatically listen and adapt to device/OS theme preference changes
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -87,7 +178,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   }, []);
 
-  // Sync theme class to document element and body
+  // 3. Sync theme class to document element and body
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -100,13 +191,37 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
-  // Sync data to localStorage
+  // 4. Sync data to localStorage and Cloud Database (Supabase)
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
       console.error('Error saving portfolio data to localStorage', e);
     }
+
+    // Debounce cloud sync to Supabase
+    const timeoutId = setTimeout(async () => {
+      try {
+        const { messages, ...contentToSave } = data;
+        const { error } = await supabase.from('portfolio_data').upsert({
+          id: 'main',
+          content: contentToSave,
+          updated_at: new Date().toISOString()
+        });
+        if (!error) {
+          setIsCloudConnected(true);
+        }
+      } catch (err) {
+        console.warn('Supabase cloud sync error:', err);
+      }
+    }, 600);
+
+    return () => clearTimeout(timeoutId);
   }, [data]);
 
   const toggleTheme = () => {
@@ -257,39 +372,92 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }));
   };
 
-  // Messages
-  const sendMessage = (msg: Omit<ContactMessage, 'id' | 'date' | 'read'>) => {
+  // Live Messages (Supabase Cloud Sync)
+  const sendMessage = async (msg: Omit<ContactMessage, 'id' | 'date' | 'read'>): Promise<boolean> => {
+    const tempId = `msg-${Date.now()}`;
     const newMsg: ContactMessage = {
       ...msg,
-      id: `msg-${Date.now()}`,
+      id: tempId,
       date: new Date().toLocaleString(),
       read: false
     };
+
+    // Optimistic UI update
     setData(prev => ({
       ...prev,
       messages: [newMsg, ...(prev.messages || [])]
     }));
-    return true;
+
+    try {
+      const { data: inserted, error } = await supabase
+        .from('portfolio_messages')
+        .insert({
+          name: msg.name,
+          email: msg.email,
+          subject: msg.subject || 'Portfolio Inquiry',
+          message: msg.message,
+          read: false
+        })
+        .select()
+        .single();
+
+      if (!error && inserted) {
+        setData(prev => ({
+          ...prev,
+          messages: prev.messages.map(m => m.id === tempId ? { ...m, id: inserted.id } : m)
+        }));
+      }
+      return true;
+    } catch (err) {
+      console.warn('Supabase message dispatch warning:', err);
+      return true;
+    }
   };
 
-  const markMessageRead = (id: string) => {
+  const markMessageRead = async (id: string) => {
     setData(prev => ({
       ...prev,
       messages: (prev.messages || []).map(m => (m.id === id ? { ...m, read: true } : m))
     }));
+
+    try {
+      await supabase
+        .from('portfolio_messages')
+        .update({ read: true })
+        .eq('id', id);
+    } catch (err) {
+      console.warn('Supabase mark read error:', err);
+    }
   };
 
-  const deleteMessage = (id: string) => {
+  const deleteMessage = async (id: string) => {
     setData(prev => ({
       ...prev,
       messages: (prev.messages || []).filter(m => m.id !== id)
     }));
+
+    try {
+      await supabase
+        .from('portfolio_messages')
+        .delete()
+        .eq('id', id);
+    } catch (err) {
+      console.warn('Supabase delete message error:', err);
+    }
   };
 
   // Reset & Import/Export
-  const resetToDefaults = () => {
+  const resetToDefaults = async () => {
     setData(defaultPortfolioData);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultPortfolioData));
+    try {
+      const { messages, ...content } = defaultPortfolioData;
+      await supabase.from('portfolio_data').upsert({
+        id: 'main',
+        content,
+        updated_at: new Date().toISOString()
+      });
+    } catch (err) {}
   };
 
   const exportDataJson = () => {
@@ -315,6 +483,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       value={{
         data,
         theme,
+        isCloudConnected,
         toggleTheme,
         updateProfile,
         addExperience,
