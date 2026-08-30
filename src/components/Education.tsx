@@ -17,49 +17,57 @@ export const Education: React.FC = () => {
       <div className="education-list">
         {education.map(edu => (
           <div key={edu.id} className="education-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem', flex: 1, minWidth: 0 }}>
-              {edu.logoUrl ? (
-                <img
-                  src={edu.logoUrl}
-                  alt={edu.institution}
-                  className="company-logo"
-                  onError={e => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
-                />
-              ) : (
-                <div className="company-logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <GraduationCap size={18} />
-                </div>
-              )}
-
-              <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                <div className="institution-name">
-                  <span>{edu.institution}</span>
-                  {edu.websiteUrl && (
-                    <a
-                      href={edu.websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: 'var(--text-muted)', display: 'inline-flex' }}
-                      title={`Visit ${edu.institution}`}
-                    >
-                      <ExternalLink size={12} />
-                    </a>
-                  )}
-                </div>
-                <div className="role-title">{edu.degree}</div>
-                {edu.description && (
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-                    {edu.description}
+            {/* Top Row: Logo + University/College Name */}
+            <div className="education-header">
+              <div className="education-logo-wrap">
+                {edu.logoUrl ? (
+                  <img
+                    src={edu.logoUrl}
+                    alt={edu.institution}
+                    className="company-logo"
+                    onError={e => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <div className="company-logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <GraduationCap size={18} />
                   </div>
+                )}
+              </div>
+
+              <div className="institution-name">
+                <span>{edu.institution}</span>
+                {edu.websiteUrl && (
+                  <a
+                    href={edu.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--text-muted)', display: 'inline-flex' }}
+                    title={`Visit ${edu.institution}`}
+                  >
+                    <ExternalLink size={12} />
+                  </a>
                 )}
               </div>
             </div>
 
-            <div className="experience-date">
-              {edu.startDate} - {edu.endDate}
+            {/* Second Row: Degree Name + Duration Badge */}
+            <div className="education-sub-row">
+              <div className="role-title" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                {edu.degree}
+              </div>
+              <div className="education-date-badge">
+                {edu.startDate} – {edu.endDate}
+              </div>
             </div>
+
+            {/* Third Row: Description (if available) */}
+            {edu.description && (
+              <div className="education-desc">
+                {edu.description}
+              </div>
+            )}
           </div>
         ))}
       </div>

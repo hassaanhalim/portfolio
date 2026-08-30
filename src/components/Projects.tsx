@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { ExternalLink, Github, Globe, Star, Play, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Globe, Star, ChevronDown } from 'lucide-react';
 import { Project } from '../types/portfolio';
 
 export const Projects: React.FC = () => {
   const { data } = usePortfolio();
   const { projects } = data;
   const [filter, setFilter] = useState<'all' | 'featured'>('all');
+  const [expandedProjects, setExpandedProjects] = useState<Record<string, boolean>>({});
 
   if (!projects || projects.length === 0) return null;
+
+  const toggleProjectDetails = (id: string) => {
+    setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const displayProjects = filter === 'featured' 
     ? projects.filter(p => p.featured) 
@@ -144,83 +149,101 @@ export const Projects: React.FC = () => {
       </div>
 
       <div className="projects-grid">
-        {displayProjects.map(proj => (
-          <div key={proj.id} className="project-card animate-fade-in">
-            <div className="project-media">
-              {renderProjectMedia(proj)}
+        {displayProjects.map(proj => {
+          const isExpanded = !!expandedProjects[proj.id];
 
-              {proj.featured && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '0.6rem',
-                    right: '0.6rem',
-                    background: 'rgba(0, 0, 0, 0.75)',
-                    backdropFilter: 'blur(8px)',
-                    color: '#fbbf24',
-                    border: '1px solid rgba(251, 191, 36, 0.3)',
-                    borderRadius: '9999px',
-                    padding: '0.2rem 0.5rem',
-                    fontSize: '0.7rem',
-                    fontWeight: 600,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem',
-                    zIndex: 10
-                  }}
-                >
-                  <Star size={10} fill="currentColor" />
-                  <span>Featured</span>
-                </div>
-              )}
-            </div>
+          return (
+            <div key={proj.id} className="project-card animate-fade-in">
+              <div className="project-media">
+                {renderProjectMedia(proj)}
 
-            <div className="project-content">
-              <div className="project-header">
-                <h3 className="project-title">{proj.title}</h3>
-                {proj.dates && <span className="project-dates">{proj.dates}</span>}
-              </div>
-
-              <p className="project-desc">{proj.description}</p>
-
-              {proj.tags && proj.tags.length > 0 && (
-                <div className="project-tags">
-                  {proj.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="tech-tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="project-links">
-                {proj.liveUrl && (
-                  <a
-                    href={proj.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-btn"
+                {proj.featured && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '0.6rem',
+                      right: '0.6rem',
+                      background: 'rgba(0, 0, 0, 0.75)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#fbbf24',
+                      border: '1px solid rgba(251, 191, 36, 0.3)',
+                      borderRadius: '9999px',
+                      padding: '0.2rem 0.5rem',
+                      fontSize: '0.7rem',
+                      fontWeight: 600,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      zIndex: 10
+                    }}
                   >
-                    <ExternalLink size={13} />
-                    <span>Website</span>
-                  </a>
-                )}
-
-                {proj.githubUrl && (
-                  <a
-                    href={proj.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-btn"
-                  >
-                    <Github size={13} />
-                    <span>Source</span>
-                  </a>
+                    <Star size={10} fill="currentColor" />
+                    <span>Featured</span>
+                  </div>
                 )}
               </div>
+
+              <div className="project-content">
+                <div className="project-header">
+                  <h3 className="project-title">{proj.title}</h3>
+                  {proj.dates && <span className="project-dates">{proj.dates}</span>}
+                </div>
+
+                {/* Project Links & Mobile Details Toggle Button */}
+                <div className="project-links">
+                  {proj.liveUrl && (
+                    <a
+                      href={proj.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-btn"
+                    >
+                      <ExternalLink size={13} />
+                      <span>Website</span>
+                    </a>
+                  )}
+
+                  {proj.githubUrl && (
+                    <a
+                      href={proj.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-btn"
+                    >
+                      <Github size={13} />
+                      <span>Source</span>
+                    </a>
+                  )}
+
+                  {/* Toggle button visible only on mobile */}
+                  <button
+                    onClick={() => toggleProjectDetails(proj.id)}
+                    className="project-toggle-details-btn"
+                    aria-expanded={isExpanded}
+                  >
+                    <span>{isExpanded ? 'Hide Details' : 'Show Details'}</span>
+                    <ChevronDown size={13} className={`toggle-icon ${isExpanded ? 'open' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Collapsible Details Body */}
+                <div className={`project-collapsible-body ${isExpanded ? 'expanded' : ''}`}>
+                  <p className="project-desc">{proj.description}</p>
+
+                  {proj.tags && proj.tags.length > 0 && (
+                    <div className="project-tags">
+                      {proj.tags.map((tag, tIdx) => (
+                        <span key={tIdx} className="tech-tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
