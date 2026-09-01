@@ -128,31 +128,6 @@ export const ProfileEditor: React.FC = () => {
           </div>
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label className="form-label">Status Badge Text</label>
-            <input
-              type="text"
-              className="form-input"
-              value={profile.statusText}
-              placeholder="e.g. Available for interesting projects"
-              onChange={e => handleChange('statusText', e.target.value)}
-            />
-          </div>
-
-          <div className="form-group" style={{ justifyContent: 'center' }}>
-            <label className="form-label">Availability Status</label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', marginTop: '0.4rem', fontSize: '0.875rem' }}>
-              <input
-                type="checkbox"
-                checked={profile.statusAvailable}
-                onChange={e => handleChange('statusAvailable', e.target.checked)}
-                style={{ width: '1.1rem', height: '1.1rem' }}
-              />
-              <span>Active / Available for Work (Green glowing dot)</span>
-            </label>
-          </div>
-        </div>
 
         <div className="form-group">
           <label className="form-label">Resume Download Link / URL</label>

@@ -13,8 +13,8 @@ export interface Profile {
   bio: string;
   avatarUrl: string;
   location: string;
-  statusText: string;
-  statusAvailable: boolean;
+  statusText?: string;
+  statusAvailable?: boolean;
   resumeUrl: string;
   socials: SocialLink[];
 }

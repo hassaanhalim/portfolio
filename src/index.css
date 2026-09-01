@@ -431,44 +431,6 @@ button {
   max-width: 540px;
 }
 
-.hero-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #047857;
-  padding: 0.35rem 0.8rem;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: 9999px;
-  width: fit-content;
-  margin-top: 0.25rem;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08);
-}
-
-.dark .hero-status {
-  color: #34d399;
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.3);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  animation: pulseGlow 2s infinite;
-}
-
-.status-dot.inactive {
-  background-color: #94a3b8;
-  box-shadow: none;
-  animation: none;
-}
 
 .hero-avatar-wrapper {
   position: relative;

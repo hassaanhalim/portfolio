@@ -49,13 +49,6 @@ export const Hero: React.FC = () => {
     <section id="hero" className="portfolio-section animate-fade-in">
       <div className="hero-container">
         <div className="hero-text-content">
-          {profile.statusText && profile.statusText.trim() !== '' && (
-            <div className="hero-status">
-              <span className={`status-dot ${profile.statusAvailable ? '' : 'inactive'}`} />
-              <span>{profile.statusText}</span>
-            </div>
-          )}
-
           <h1 className="hero-name">
             {profile.title || `Hi, I'm ${profile.name}`}
           </h1>
